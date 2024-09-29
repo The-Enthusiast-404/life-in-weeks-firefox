@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>New Tab - Life in Weeks</title>
+        <style>
+            :root {
+                --bg-color: #f5f5f5;
+                --text-color: #333333;
+                --primary-color: #4a90e2;
+                --secondary-color: #ffffff;
+                --lived-color: #4caf50;
+                --unlived-color: #e0e0e0;
+                --border-color: #d1d1d1;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                margin: 0;
+                padding: 20px;
+                box-sizing: border-box;
+                background-color: var(--bg-color);
+                color: var(--text-color);
+                transition: all 0.3s ease;
+            }
+
+            body.dark {
+                --bg-color: #1a1a1a;
+                --text-color: #ffffff;
+                --secondary-color: #2c2c2c;
+                --lived-color: #45a049;
+                --unlived-color: #404040;
+                --border-color: #444444;
+            }
+
+            h1 {
+                margin-bottom: 20px;
+                font-weight: 300;
+                font-size: 2.5rem;
+                text-align: center;
+            }
+
+            #app-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                max-width: 1000px;
+                background-color: var(--secondary-color);
+                border-radius: 15px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+            }
+
+            #settings {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px;
+                width: 100%;
+                box-sizing: border-box;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            #weeks-container {
+                display: grid;
+                grid-template-columns: repeat(52, 1fr);
+                gap: 2px;
+                width: 100%;
+                padding: 20px;
+                box-sizing: border-box;
+            }
+
+            .week {
+                width: 100%;
+                padding-bottom: 100%;
+                background-color: var(--unlived-color);
+                border-radius: 50%;
+                transition: background-color 0.3s;
+            }
+
+            .lived {
+                background-color: var(--lived-color);
+            }
+
+            .input-group {
+                display: flex;
+                align-items: center;
+                margin-right: 10px;
+            }
+
+            label {
+                margin-right: 10px;
+                font-size: 14px;
+            }
+
+            input {
+                padding: 8px;
+                border: 1px solid var(--border-color);
+                border-radius: 5px;
+                font-size: 14px;
+                background-color: var(--bg-color);
+                color: var(--text-color);
+            }
+
+            button {
+                padding: 8px 15px;
+                border: none;
+                border-radius: 5px;
+                font-size: 14px;
+                background-color: var(--primary-color);
+                color: white;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+
+            button:hover {
+                background-color: #3a7bc0;
+            }
+
+            #theme-toggle {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+            }
+
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 50px;
+                height: 24px;
+                margin-left: 10px;
+            }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #ccc;
+                transition: 0.4s;
+                border-radius: 24px;
+            }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 18px;
+                width: 18px;
+                left: 3px;
+                bottom: 3px;
+                background-color: white;
+                transition: 0.4s;
+                border-radius: 50%;
+            }
+
+            input:checked + .slider {
+                background-color: var(--primary-color);
+            }
+
+            input:checked + .slider:before {
+                transform: translateX(26px);
+            }
+
+            @media (max-width: 768px) {
+                #settings {
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+
+                .input-group {
+                    margin-right: 0;
+                    margin-bottom: 10px;
+                }
+
+                button {
+                    width: 100%;
+                    margin-top: 10px;
+                }
+
+                #theme-toggle {
+                    justify-content: space-between;
+                    margin-top: 10px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Your Life in Weeks</h1>
+        <div id="app-container">
+            <div id="settings">
+                <div class="input-group">
+                    <label for="birthday">Birthday:</label>
+                    <input type="date" id="birthday" />
+                </div>
+                <div class="input-group">
+                    <label for="lifespan">Expected Lifespan:</label>
+                    <input
+                        type="number"
+                        id="lifespan"
+                        min="1"
+                        max="120"
+                        value="90"
+                    />
+                </div>
+                <button id="save">Update</button>
+                <label id="theme-toggle">
+                    Dark Mode
+                    <div class="switch">
+                        <input type="checkbox" id="theme-checkbox" />
+                        <span class="slider"></span>
+                    </div>
+                </label>
+            </div>
+            <div id="weeks-container"></div>
+        </div>
+        <script src="new-tab.js"></script>
+    </body>
+</html>
